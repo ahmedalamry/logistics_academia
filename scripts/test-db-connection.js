@@ -1,10 +1,10 @@
 const { Pool } = require('pg')
 
-// Simple env loader: prefer process.env but fall back to .env.local or .env if present
+// Simple env loader: prefer process.env but fall back to .env or .env if present
 function loadLocalEnv() {
   const fs = require('fs')
   const path = require('path')
-  const candidates = ['.env.local', '.env']
+  const candidates = ['.env', '.env']
   for (const fname of candidates) {
     const p = path.join(__dirname, '..', fname)
     if (fs.existsSync(p)) {

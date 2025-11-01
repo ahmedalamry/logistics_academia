@@ -66,7 +66,7 @@ curl http://localhost:3000/api/test-db
 
 ## 🔧 **Step 4: Check Environment Variables**
 
-Create `.env.local` file in project root:
+Create `.env` file in project root:
 ```env
 DATABASE_URL="postgresql://logistics_user:logistics_password@localhost:5432/logistics_db"
 ```

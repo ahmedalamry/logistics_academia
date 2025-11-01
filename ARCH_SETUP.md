@@ -28,7 +28,7 @@ This script will:
 - ✅ Create the `logistics_db` database
 - ✅ Create the `logistics_user` user
 - ✅ Set up proper permissions
-- ✅ Create `.env.local` file
+- ✅ Create `.env` file
 - ✅ Test the connection
 
 ### Option 2: Manual Setup
@@ -61,8 +61,8 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO logistics_user;
 \q
 EOF
 
-# 6. Create .env.local file
-cat > .env.local << EOF
+# 6. Create .env file
+cat > .env << EOF
 DATABASE_URL="postgresql://logistics_user:logistics_password@localhost:5432/logistics_db"
 NEXTAUTH_SECRET="your-secret-key-here-change-this-in-production"
 NEXTAUTH_URL="http://localhost:3000"

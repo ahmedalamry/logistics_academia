@@ -6,7 +6,7 @@ This guide will help you set up PostgreSQL database for your BLACK SEA STAR logi
 
 ### 1. Environment Variables
 
-Create a `.env.local` file in your project root with the following variables:
+Create a `.env` file in your project root with the following variables:
 
 ```env
 # Database Configuration
@@ -37,7 +37,7 @@ API_BASE_URL="http://localhost:3000/api"
    - Copy the connection string
 
 2. **Update Environment Variables:**
-   - Replace `DATABASE_URL` in `.env.local` with your Vercel database URL
+   - Replace `DATABASE_URL` in `.env` with your Vercel database URL
    - Add the same URL to your Vercel project environment variables
 
 ## 🚀 Installation & Setup
@@ -112,7 +112,7 @@ The admin panel includes:
 ### Common Issues:
 
 1. **Connection Error:**
-   - Check your `DATABASE_URL` in `.env.local`
+   - Check your `DATABASE_URL` in `.env`
    - Ensure your database is running
    - Verify network connectivity
 

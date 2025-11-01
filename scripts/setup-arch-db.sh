@@ -92,9 +92,9 @@ else
     exit 1
 fi
 
-# Create .env.local file
-print_status "Creating .env.local file..."
-cat > .env.local << EOF
+# Create .env file
+print_status "Creating .env file..."
+cat > .env << EOF
 # PostgreSQL Database Configuration
 DATABASE_URL="postgresql://logistics_user:logistics_password@localhost:5432/logistics_db"
 
@@ -110,7 +110,7 @@ ADMIN_PASSWORD="admin123"
 API_BASE_URL="http://localhost:3000/api"
 EOF
 
-print_success ".env.local file created!"
+print_success ".env file created!"
 
 # Display connection information
 echo ""
