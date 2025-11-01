@@ -37,7 +37,7 @@ export default function Logo({ className = "", size = "md" }: LogoProps) {
   return (
     <div className={`${sizeClasses[size]} relative ${className}`}>
       <Image
-        src="/logo.jpg"
+        src="/logo.png"
         alt="BLACK SEA STAR logo"
         fill
         className="object-contain transition-all duration-300 group-hover:scale-105"

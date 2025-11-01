@@ -91,16 +91,16 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section
+    <section
   className="relative pt-28 pb-16 text-white overflow-hidden"
   style={{
-    background: "linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%)",
+    background: "linear-gradient(135deg, #0A0F2B 0%, #172A4E 50%, #2A4F7F 100%)", // ألوان زرقاء داكنة متدرجة
   }}
   aria-labelledby="hero-title"
 >
   {/* Animated Background Elements */}
   <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+    <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
     <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-gray-600/10 rounded-full blur-3xl"></div>
     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gray-500/5 rounded-full blur-3xl"></div>
   </div>
@@ -119,7 +119,7 @@ export default function HomePage() {
               </div>
               <Badge 
                 variant="secondary" 
-                className="bg-white/20 text-white backdrop-blur-sm border-0 px-3 py-1.5 text-sm hover:bg-white/30 transition-all duration-300"
+                className="bg-blue-500/20 text-white backdrop-blur-sm border-0 px-3 py-1.5 text-sm hover:bg-white/30 transition-all duration-300"
               >
                 {t("home.heroTitle")}
               </Badge>
@@ -222,10 +222,10 @@ export default function HomePage() {
             {stats.map((stat, index) => (
               <AnimatedSection key={index} animation="fade-up" delay={index * 100} duration={700}>
                 <div className="text-center group p-6 rounded-2xl hover:bg-white hover:shadow-xl hover:border hover:border-gray-100 transition-all duration-500">
-                  <div className="w-16 h-16 bg-gradient-to-br from-gray-900 to-black rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-900 to-blue rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <stat.icon className="w-8 h-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-2 group-hover:scale-105 transition-transform duration-300">
+                  <div className="text-3xl font-bold text-blue-900 mb-2 group-hover:scale-105 transition-transform duration-300">
                     {stat.number}
                   </div>
                   <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -263,10 +263,10 @@ export default function HomePage() {
              <AnimatedSection key={index} animation="fade-up" delay={index * 100} duration={500}>
   <Card className="group hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 h-full 
                    border border-black/10 rounded-2xl 
-                   bg-black/10 backdrop-blur-md 
-                   hover:bg-black/10 hover:border-black overflow-hidden">
+                   bg-blue-500/10 backdrop-blur-md 
+                   hover:bg-blue-400/10 hover:border-black overflow-hidden">
     <CardHeader className="pb-4">
-      <div className="w-14 h-14 bg-gradient-to-br from-gray-900 to-black rounded-2xl 
+      <div className="w-14 h-14 bg-gradient-to-br from-blue-900 to-blue rounded-2xl 
                       flex items-center justify-center mb-4 
                       group-hover:scale-110 group-hover:rotate-3 
                       transition-all duration-300 shadow-lg">
@@ -331,7 +331,7 @@ export default function HomePage() {
                       duration={700}
                     >
                       <div className="flex items-start space-x-4 rtl:space-x-reverse group p-4 rounded-2xl hover:bg-white hover:shadow-lg hover:border hover:border-gray-100 transition-all duration-500">
-                        <div className="w-12 h-12 bg-gradient-to-br from-gray-900 to-black rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-900 to-white  text-slate-50 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md">
                           {feature.icon}
                         </div>
                         <div className="flex-1">
@@ -388,9 +388,9 @@ export default function HomePage() {
  <AnimatedSection animation="fade-up" duration={800}>
   <section
     className="py-20 text-white relative overflow-hidden"
-    style={{
-      background: "linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d2d2d 100%)",
-    }}
+  style={{
+    background: "linear-gradient(135deg, #0A0F2B 0%, #172A4E 50%, #2A4F7F 100%)", // ألوان زرقاء داكنة متدرجة
+  }}
   >
     {/* Animated Background */}
     <div className="absolute inset-0 opacity-10">

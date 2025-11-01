@@ -245,14 +245,14 @@ export class TeamMemberModel {
   static async create(teamMemberData: Omit<TeamMember, 'id' | 'created_at' | 'updated_at'>) {
     const { name_en, name_ar, name_ro, position_en, position_ar, position_ro, bio_en, bio_ar, bio_ro, email, phone, image_url, linkedin_url, experience_years, is_active = true, sort_order = 0 } = teamMemberData
     const result = await query(
-      'INSERT INTO team (name_en, name_ar, name_ro, position_en, position_ar, position_ro, bio_en, bio_ar, bio_ro, email, phone, image_url, linkedin_url, experience_years, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *',
+      'INSERT INTO team_members (name_en, name_ar, name_ro, position_en, position_ar, position_ro, bio_en, bio_ar, bio_ro, email, phone, image_url, linkedin_url, experience_years, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *',
       [name_en, name_ar, name_ro, position_en, position_ar, position_ro, bio_en, bio_ar, bio_ro, email, phone, image_url, linkedin_url, experience_years, is_active]
     )
     return result.rows[0]
   }
 
   static async findAll() {
-    const result = await query('SELECT * FROM team ORDER BY created_at DESC')
+    const result = await query('SELECT * FROM team_members ORDER BY created_at DESC')
     return result.rows
   }
 
@@ -261,12 +261,12 @@ export class TeamMemberModel {
   }
 
   static async findActive() {
-    const result = await query('SELECT * FROM team WHERE is_active = true ORDER BY created_at DESC')
+    const result = await query('SELECT * FROM team_members WHERE is_active = true ORDER BY created_at DESC')
     return result.rows
   }
 
   static async findById(id: string) {
-    const result = await query('SELECT * FROM team WHERE id = $1', [id])
+    const result = await query('SELECT * FROM team_members WHERE id = $1', [id])
     return result.rows[0]
   }
 
@@ -281,7 +281,7 @@ export class TeamMemberModel {
   }
 
   static async delete(id: string) {
-    const result = await query('DELETE FROM team WHERE id = $1 RETURNING *', [id])
+    const result = await query('DELETE FROM team_members WHERE id = $1 RETURNING *', [id])
     return result.rows[0]
   }
 }

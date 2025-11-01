@@ -7,22 +7,22 @@ The logo image is not displaying because it's located in the `images/` directory
 You need to copy the logo image from the `images/` directory to the `public/` directory.
 
 ### Manual Steps:
-1. Copy the file `images/photo_2025-10-03_19-10-54.jpg` to `public/logo.jpg`
+1. Copy the file `images/photo_2025-10-03_19-10-54.jpg` to `public/logo.png`
 2. Or rename it to `public/photo_2025-10-03_19-10-54.jpg`
 
 ### Command Line (if terminal works):
 ```bash
-cp images/photo_2025-10-03_19-10-54.jpg public/logo.jpg
+cp images/photo_2025-10-03_19-10-54.jpg public/logo.png
 ```
 
 ### Windows Command Prompt:
 ```cmd
-copy images\photo_2025-10-03_19-10-54.jpg public\logo.jpg
+copy images\photo_2025-10-03_19-10-54.jpg public\logo.png
 ```
 
 ### PowerShell:
 ```powershell
-Copy-Item "images/photo_2025-10-03_19-10-54.jpg" "public/logo.jpg"
+Copy-Item "images/photo_2025-10-03_19-10-54.jpg" "public/logo.png"
 ```
 
 ## Current Status

@@ -13,7 +13,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-black/80 text-white">
+    <footer className="bg-blue-50/80 text-black">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -24,7 +24,7 @@ export default function Footer() {
               </div>
               <span className="font-bold text-lg">{t("footer.companyName")}</span>
             </div>
-            <p className="text-gray-100 text-sm leading-relaxed">{t("footer.description")}</p>
+            <p className="text-gray-900 text-sm leading-relaxed">{t("footer.description")}</p>
           </div>
 
           {/* Quick Links */}
@@ -32,22 +32,22 @@ export default function Footer() {
             <h3 className="font-semibold text-lg">{t("footer.quickLinks")}</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-gray-100 hover:text-white transition-colors">
+                <Link href="/about" className="text-gray-900 hover:text-blue-500 transition-colors">
                   {t("nav.about")}
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-gray-100 hover:text-white transition-colors">
+                <Link href="/services" className="text-gray-900 hover:text-blue-500 transition-colors">
                   {t("nav.services")}
                 </Link>
               </li>
               <li>
-                <Link href="/import-export" className="text-gray-100 hover:text-white transition-colors">
+                <Link href="/import-export" className="text-gray-900 hover:text-blue-500 transition-colors">
                   {t("nav.importExport")}
                 </Link>
               </li>
               <li>
-                <Link href="/certificates" className="text-gray-100 hover:text-white transition-colors">
+                <Link href="/certificates" className="text-gray-900 hover:text-blue-500 transition-colors">
                   {t("nav.certificates")}
                 </Link>
               </li>
@@ -58,11 +58,11 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-lg">{t("footer.services")}</h3>
             <ul className="space-y-2">
-              <li className="text-gray-100">{t("home.seaFreight")}</li>
-              <li className="text-gray-100">{t("home.airFreight")}</li>
-              <li className="text-gray-100">{t("home.landTransport")}</li>
-              <li className="text-gray-100">{t("home.customsClearance")}</li>
-              <li className="text-gray-100">{t("services.warehouseTitle")}</li>
+              <li className="text-gray-900">{t("home.seaFreight")}</li>
+              <li className="text-gray-900">{t("home.airFreight")}</li>
+              <li className="text-gray-900">{t("home.landTransport")}</li>
+              <li className="text-gray-900">{t("home.customsClearance")}</li>
+              <li className="text-gray-900">{t("services.warehouseTitle")}</li>
             </ul>
           </div>
 
@@ -71,30 +71,30 @@ export default function Footer() {
             <h3 className="font-semibold text-lg">{t("footer.contact")}</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-gray-300">📍</span>
-                <span className="text-gray-100">{siteSettings?.address || 'București, România'}</span>
+                <span className="text-gray-300"></span>
+                <span className="text-gray-900">{siteSettings?.address || 'București, România'}</span>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-gray-300">✉️</span>
-                <a href={`mailto:${siteSettings?.contactEmail || 'info@blacksea-star.com'}`} className="text-gray-100 hover:text-white transition-colors">{siteSettings?.contactEmail || 'info@blacksea-star.com'}</a>
+                <span className="text-gray-300"></span>
+                <a href={`mailto:${siteSettings?.contactEmail || 'info@blacksea-star.com'}`} className="text-gray-900 hover:text-blue-500 transition-colors">{siteSettings?.contactEmail || 'info@blacksea-star.com'}</a>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-gray-300">🌐</span>
-                <a href={`https://${siteSettings?.website || 'www.blacksea-star.com'}`} target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-white transition-colors">{siteSettings?.website || 'www.blacksea-star.com'}</a>
+                <span className="text-gray-300"></span>
+                <a href={`https://${siteSettings?.website || 'www.blacksea-star.com'}`} target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-blue-500 transition-colors">{siteSettings?.website || 'www.blacksea-star.com'}</a>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-gray-300">📞</span>
-                <a href={`tel:${siteSettings?.contactPhone || '+40726547699'}`} className="text-gray-100 hover:text-white transition-colors">{siteSettings?.contactPhone || '+40 726 547 699'}</a>
+                <span className="text-gray-300"></span>
+                <a href={`tel:${siteSettings?.contactPhone || '+40726547699'}`} className="text-gray-900 hover:text-blue-500 transition-colors">{siteSettings?.contactPhone || '+40 726 547 699'}</a>
               </div>
               <div className="flex items-center space-x-3 rtl:space-x-reverse">
-                <span className="text-gray-300">📱</span>
-                <a href={`tel:${siteSettings?.contactPhone2 || '+40791391711'}`} className="text-gray-100 hover:text-white transition-colors">{siteSettings?.contactPhone2 || '+40 791 391 711'}</a>
+                <span className="text-gray-300"></span>
+                <a href={`tel:${siteSettings?.contactPhone2 || '+40791391711'}`} className="text-gray-900 hover:text-blue-500 transition-colors">{siteSettings?.contactPhone2 || '+40 791 391 711'}</a>
               </div>
             </div>
 
             {/* Social Media */}
             <div className="flex space-x-4 rtl:space-x-reverse pt-4">
-              <span className="text-gray-100 text-sm opacity-75">
+              <span className="text-gray-900 text-sm opacity-75">
                 Follow us on social media
               </span>
             </div>
@@ -102,7 +102,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-gray-200 text-sm">
+          <p className="text-gray-900 text-sm">
             © 2025 {t("footer.companyName")}. {t("footer.rights")}.
           </p>
         </div>

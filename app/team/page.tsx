@@ -39,11 +39,19 @@ export default function TeamPage() {
           const data = await response.json()
           setTeamMembers(data)
         } else {
-          console.error('Failed to load team members')
-          setError('Failed to load team members')
+          // Try to read server error body for better logging
+          let serverError: any = null
+          try {
+            serverError = await response.json()
+          } catch (e) {
+            // ignore parse errors
+          }
+          console.error('Failed to load team members', response.status, serverError)
+          // Do not show the full-screen error UI for server-side errors; show empty state instead
+          setTeamMembers([])
         }
-      } catch (error) {
-        console.error('Error loading team members:', error)
+      } catch (fetchError) {
+        console.error('Error loading team members:', fetchError)
         setError('Error loading team members')
       } finally {
         setIsLoading(false)

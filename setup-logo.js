@@ -9,11 +9,11 @@ if (!fs.existsSync(publicDir)) {
 
 // Copy the logo image
 const sourcePath = path.join(__dirname, 'images', 'photo_2025-10-03_19-10-54.jpg');
-const destPath = path.join(publicDir, 'logo.jpg');
+const destPath = path.join(publicDir, 'logo.png');
 
 try {
   fs.copyFileSync(sourcePath, destPath);
-  console.log('Logo copied successfully to public/logo.jpg');
+  console.log('Logo copied successfully to public/logo.png');
 } catch (error) {
   console.error('Error copying logo:', error.message);
 }
