@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Plus, Edit, Trash2, Users, Mail, Phone, Linkedin } from "lucide-react"
+import { ArrowLeft, Plus, Edit, Trash2, Users, Mail, Phone, Linkedin, Eye, X, Briefcase, Calendar } from "lucide-react"
 import { ImageUpload } from "@/components/ui/image-upload"
+import Image from "next/image"
 
 interface TeamMember {
   id: string
@@ -38,67 +39,7 @@ export default function AdminTeamPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [showAddForm, setShowAddForm] = useState(false)
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
-
-  // Sample team members data
-  const sampleTeamMembers: TeamMember[] = [
-    {
-      id: "1",
-      name_en: "Ahmed Al-Rashid",
-      name_ar: "أحمد الراشد",
-      name_ro: "Ahmed Al-Rashid",
-      position_en: "Chief Executive Officer",
-      position_ar: "الرئيس التنفيذي",
-      position_ro: "Director General",
-      bio_en: "15+ years experience in logistics and supply chain management. Expert in international trade and business development.",
-      bio_ar: "أكثر من 15 عامًا من الخبرة في اللوجستيات وإدارة سلسلة التوريد. خبير في التجارة الدولية وتطوير الأعمال.",
-      bio_ro: "Peste 15 ani de experiență în logistică și managementul lanțului de aprovizionare. Expert în comerț internațional și dezvoltare de afaceri.",
-      email: "ahmed@blacksea-star.com",
-      phone: "+40 726 547 699",
-      image_url: "/team/ahmed-al-rashid.jpg",
-      linkedin_url: "https://linkedin.com/in/ahmed-al-rashid",
-      experience_years: 15,
-      created_at: "2024-01-01",
-      updated_at: "2024-01-01"
-    },
-    {
-      id: "2",
-      name_en: "Sarah Johnson",
-      name_ar: "سارة جونسون",
-      name_ro: "Sarah Johnson",
-      position_en: "Chief Operations Officer",
-      position_ar: "مدير العمليات",
-      position_ro: "Director de Operațiuni",
-      bio_en: "Expert in international trade and customs regulations. Specialized in supply chain optimization and process improvement.",
-      bio_ar: "خبيرة في التجارة الدولية واللوائح الجمركية. متخصصة في تحسين سلسلة التوريد وتحسين العمليات.",
-      bio_ro: "Expertă în comerț internațional și reglementări vamale. Specializată în optimizarea lanțului de aprovizionare și îmbunătățirea proceselor.",
-      email: "sarah@blacksea-star.com",
-      phone: "+40 791 391 711",
-      image_url: "/team/sarah-johnson.jpg",
-      linkedin_url: "https://linkedin.com/in/sarah-johnson",
-      experience_years: 12,
-      created_at: "2024-01-01",
-      updated_at: "2024-01-01"
-    },
-    {
-      id: "3",
-      name_en: "Mohammed Hassan",
-      name_ar: "محمد حسن",
-      name_ro: "Mohammed Hassan",
-      position_en: "Chief Technology Officer",
-      position_ar: "مدير التكنولوجيا",
-      position_ro: "Director de Tehnologie",
-      bio_en: "Leading digital transformation in logistics operations. Expert in implementing cutting-edge technology solutions.",
-      bio_ar: "يقود التحول الرقمي في العمليات اللوجستية. خبير في تنفيذ حلول التكنولوجيا المتطورة.",
-      bio_ro: "Conduce transformarea digitală în operațiunile logistice. Expert în implementarea soluțiilor tehnologice de ultimă generație.",
-      email: "mohammed@blacksea-star.com",
-      phone: "+40 726 547 700",
-      image_url: "/team/mohammed-hassan.jpg",
-      linkedin_url: "https://linkedin.com/in/mohammed-hassan",
-      experience_years: 10,
-      created_at: "2024-01-01",
-      updated_at: "2024-01-01"
-    }
-  ]
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null)
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -107,7 +48,6 @@ export default function AdminTeamPage() {
   }, [isAuthenticated, loading, router])
 
   useEffect(() => {
-    // Load team members from database
     const loadTeamMembers = async () => {
       try {
         const response = await fetch('/api/team')
@@ -131,8 +71,11 @@ export default function AdminTeamPage() {
 
   if (loading || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading team members...</p>
+        </div>
       </div>
     )
   }
@@ -226,19 +169,22 @@ export default function AdminTeamPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white/80 backdrop-blur-xl shadow-sm border-b border-blue-200/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" onClick={handleBack}>
+              <Button variant="outline" size="sm" onClick={handleBack} className="border-blue-200 hover:bg-blue-50">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Dashboard
               </Button>
-              <h1 className="text-xl font-semibold text-gray-900">Team Members Management</h1>
+             
             </div>
-            <Button onClick={handleAddMember}>
+            <Button 
+              onClick={handleAddMember}
+              className="bg-gradient-to-r"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Team Member
             </Button>
@@ -249,273 +195,477 @@ export default function AdminTeamPage() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">Team Members</h2>
-            <p className="text-gray-600">Manage your team member profiles and information</p>
-          </div>
-
           {/* Team Members Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {teamMembers.map((member) => (
-              <Card key={member.id} className="hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Users className="h-5 w-5 text-blue-600" />
-                      <CardTitle className="text-lg">{member.name_en}</CardTitle>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleEditMember(member)}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDeleteMember(member.id)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div>
-                      <Label className="text-sm font-medium text-gray-500">Position</Label>
-                      <p className="text-sm text-gray-900">{member.position_en}</p>
-                    </div>
-                    <div>
-                      <Label className="text-sm font-medium text-gray-500">Experience</Label>
-                      <p className="text-sm text-gray-900">{member.experience_years} years</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">{member.email}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Phone className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">{member.phone}</span>
-                    </div>
-                    {member.linkedin_url && (
-                      <div className="flex items-center space-x-2">
-                        <Linkedin className="h-4 w-4 text-blue-600" />
-                        <a 
-                          href={member.linkedin_url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-sm text-blue-600 hover:underline"
-                        >
-                          LinkedIn Profile
-                        </a>
+              <Card 
+                key={member.id} 
+                className="hover:shadow-xl transition-all duration-500 border border-blue-200/30 bg-white/80 backdrop-blur-xl rounded-2xl overflow-hidden hover:-translate-y-2 group"
+              >
+                <CardContent className="p-0">
+                  {/* Member Image */}
+                  <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100">
+                    {member.image_url ? (
+                      <Image
+                        src={member.image_url}
+                        alt={member.name_en}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.style.display = 'none'
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                          <Users className="h-8 w-8 text-white" />
+                        </div>
                       </div>
                     )}
-                    <div>
-                      <Label className="text-sm font-medium text-gray-500">Bio</Label>
-                      <p className="text-sm text-gray-600 line-clamp-3">{member.bio_en}</p>
+                  </div>
+
+                  {/* Member Info */}
+                  <div className="p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-gray-800 text-sm line-clamp-1">
+                        {member.name_en}
+                      </h3>
+                      <div className="flex space-x-1">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleEditMember(member)}
+                          className="h-6 w-6 p-0 border-blue-200 hover:bg-blue-50"
+                        >
+                          <Edit className="h-3 w-3" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleDeleteMember(member.id)}
+                          className="h-6 w-6 p-0 border-red-200 hover:bg-red-50 text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
                     </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Briefcase className="h-3 w-3 text-gray-400" />
+                        <span className="text-xs text-gray-600 line-clamp-1">{member.position_en}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Calendar className="h-3 w-3 text-gray-400" />
+                        <span className="text-xs text-gray-600">{member.experience_years}+ years</span>
+                      </div>
+                    </div>
+
+                    {/* View More Button */}
+                    <Button
+                      onClick={() => setSelectedMember(member)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700 transition-all duration-300"
+                    >
+                      <Eye className="h-3 w-3 mr-2" />
+                      View Details
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
+          {/* Team Member Details Modal */}
+          {selectedMember && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <Card className="w-full bg-white/95 backdrop-blur-xl shadow-2xl border-2 border-blue-200/30 rounded-2xl">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-blue-200/30">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-xl font-bold text-gray-900 flex items-center space-x-2">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                          <Users className="h-6 w-6 text-white" />
+                        </div>
+                        <span>{selectedMember.name_en}</span>
+                      </CardTitle>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedMember(null)}
+                        className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6 space-y-6">
+                    {/* Member Image */}
+                    {selectedMember.image_url && (
+                      <div className="relative h-64 w-full overflow-hidden rounded-xl bg-gradient-to-br from-blue-100 to-purple-100 border border-blue-200/30">
+                        <Image
+                          src={selectedMember.image_url}
+                          alt={selectedMember.name_en}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+
+                    {/* Member Details */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* English */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">English Name</Label>
+                          <div className="bg-blue-50/50 rounded-lg p-3 border border-blue-200">
+                            <p className="text-sm font-medium text-gray-900">{selectedMember.name_en}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">English Position</Label>
+                          <div className="bg-blue-50/50 rounded-lg p-3 border border-blue-200">
+                            <p className="text-sm font-medium text-gray-900">{selectedMember.position_en}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">English Bio</Label>
+                          <div className="bg-gray-50/80 rounded-lg p-3 border border-gray-200">
+                            <p className="text-sm text-gray-700 leading-relaxed">{selectedMember.bio_en}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Arabic */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Arabic Name</Label>
+                          <div className="bg-green-50/50 rounded-lg p-3 border border-green-200">
+                            <p className="text-sm font-medium text-gray-900 text-right" dir="rtl">{selectedMember.name_ar}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Arabic Position</Label>
+                          <div className="bg-green-50/50 rounded-lg p-3 border border-green-200">
+                            <p className="text-sm font-medium text-gray-900 text-right" dir="rtl">{selectedMember.position_ar}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Arabic Bio</Label>
+                          <div className="bg-gray-50/80 rounded-lg p-3 border border-gray-200">
+                            <p className="text-sm text-gray-700 leading-relaxed text-right" dir="rtl">{selectedMember.bio_ar}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Romanian */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Romanian Name</Label>
+                          <div className="bg-purple-50/50 rounded-lg p-3 border border-purple-200">
+                            <p className="text-sm font-medium text-gray-900">{selectedMember.name_ro}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Romanian Position</Label>
+                          <div className="bg-purple-50/50 rounded-lg p-3 border border-purple-200">
+                            <p className="text-sm font-medium text-gray-900">{selectedMember.position_ro}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Romanian Bio</Label>
+                          <div className="bg-gray-50/80 rounded-lg p-3 border border-gray-200">
+                            <p className="text-sm text-gray-700 leading-relaxed">{selectedMember.bio_ro}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Contact & Experience */}
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Contact Information</Label>
+                          <div className="bg-orange-50/50 rounded-lg p-3 border border-orange-200 space-y-2">
+                            <div className="flex items-center space-x-2">
+                              <Mail className="h-4 w-4 text-orange-600" />
+                              <span className="text-sm text-gray-700">{selectedMember.email}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Phone className="h-4 w-4 text-orange-600" />
+                              <span className="text-sm text-gray-700">{selectedMember.phone}</span>
+                            </div>
+                            {selectedMember.linkedin_url && (
+                              <div className="flex items-center space-x-2">
+                                <Linkedin className="h-4 w-4 text-blue-600" />
+                                <a 
+                                  href={selectedMember.linkedin_url} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-sm text-blue-600 hover:underline"
+                                >
+                                  LinkedIn Profile
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-sm font-semibold text-gray-700">Experience</Label>
+                          <div className="bg-yellow-50/50 rounded-lg p-3 border border-yellow-200">
+                            <div className="flex items-center space-x-2">
+                              <Calendar className="h-4 w-4 text-yellow-600" />
+                              <span className="text-sm font-medium text-gray-900">
+                                {selectedMember.experience_years}+ years of experience
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+                      <Button
+                        variant="outline"
+                        onClick={() => setSelectedMember(null)}
+                        className="border-gray-300 hover:border-gray-400"
+                      >
+                        Close
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setEditingMember(selectedMember)
+                          setSelectedMember(null)
+                        }}
+                        className="bg-gradient-to-r "
+                      >
+                        <Edit className="h-4 w-4 mr-2" />
+                        Edit Member
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          )}
+
           {/* Add/Edit Team Member Form */}
           {(showAddForm || editingMember) && (
-            <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center p-4 z-50">
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
               <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-                <Card className="w-full bg-white shadow-2xl border-2">
-                <CardHeader className="bg-gray-50 border-b">
-                  <CardTitle className="text-xl font-bold text-gray-900">
-                    {editingMember ? "Edit Team Member" : "Add New Team Member"}
-                  </CardTitle>
-                  <CardDescription className="text-gray-600">
-                    {editingMember ? "Update team member information" : "Add a new team member to your company"}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="bg-white p-6">
-                  <form className="space-y-6" onSubmit={handleSubmitTeamMember}>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="name_en" className="text-sm font-medium text-gray-700">Name (English)</Label>
-                        <Input
-                          id="name_en"
-                          name="name_en"
-                          defaultValue={editingMember?.name_en || ""}
-                          placeholder="Full name in English"
-                          required
-                        />
+                <Card className="w-full bg-white/95 backdrop-blur-xl shadow-2xl border-2 border-blue-200/30 rounded-2xl">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-blue-200/30">
+                    <CardTitle className="text-2xl font-bold text-gray-900">
+                      {editingMember ? "Edit Team Member" : "Add New Team Member"}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600">
+                      {editingMember ? "Update team member information" : "Add a new technology expert to your team"}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="bg-white p-8">
+                    <form className="space-y-8" onSubmit={handleSubmitTeamMember}>
+                      {/* Member Names */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="space-y-3">
+                          <Label htmlFor="name_en" className="text-sm font-semibold text-gray-700">Name (English) *</Label>
+                          <Input
+                            id="name_en"
+                            name="name_en"
+                            defaultValue={editingMember?.name_en || ""}
+                            placeholder="Full name in English"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="name_ar" className="text-sm font-semibold text-gray-700">Name (Arabic) *</Label>
+                          <Input
+                            id="name_ar"
+                            name="name_ar"
+                            defaultValue={editingMember?.name_ar || ""}
+                            placeholder="الاسم الكامل بالعربية"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300 text-right"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="name_ro" className="text-sm font-semibold text-gray-700">Name (Romanian) *</Label>
+                          <Input
+                            id="name_ro"
+                            name="name_ro"
+                            defaultValue={editingMember?.name_ro || ""}
+                            placeholder="Numele complet în română"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                            required
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="name_ar" className="text-sm font-medium text-gray-700">Name (Arabic)</Label>
-                        <Input
-                          id="name_ar"
-                          name="name_ar"
-                          defaultValue={editingMember?.name_ar || ""}
-                          placeholder="الاسم الكامل بالعربية"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="name_ro" className="text-sm font-medium text-gray-700">Name (Romanian)</Label>
-                        <Input
-                          id="name_ro"
-                          name="name_ro"
-                          defaultValue={editingMember?.name_ro || ""}
-                          placeholder="Numele complet în română"
-                          required
-                        />
-                      </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="position_en" className="text-sm font-medium text-gray-700">Position (English)</Label>
-                        <Input
-                          id="position_en"
-                          name="position_en"
-                          defaultValue={editingMember?.position_en || ""}
-                          placeholder="Job title in English"
-                          required
-                        />
+                      {/* Member Positions */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="space-y-3">
+                          <Label htmlFor="position_en" className="text-sm font-semibold text-gray-700">Position (English) *</Label>
+                          <Input
+                            id="position_en"
+                            name="position_en"
+                            defaultValue={editingMember?.position_en || ""}
+                            placeholder="Job title in English"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="position_ar" className="text-sm font-semibold text-gray-700">Position (Arabic) *</Label>
+                          <Input
+                            id="position_ar"
+                            name="position_ar"
+                            defaultValue={editingMember?.position_ar || ""}
+                            placeholder="المسمى الوظيفي بالعربية"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300 text-right"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="position_ro" className="text-sm font-semibold text-gray-700">Position (Romanian) *</Label>
+                          <Input
+                            id="position_ro"
+                            name="position_ro"
+                            defaultValue={editingMember?.position_ro || ""}
+                            placeholder="Titlul postului în română"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                            required
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="position_ar" className="text-sm font-medium text-gray-700">Position (Arabic)</Label>
-                        <Input
-                          id="position_ar"
-                          name="position_ar"
-                          defaultValue={editingMember?.position_ar || ""}
-                          placeholder="المسمى الوظيفي بالعربية"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="position_ro" className="text-sm font-medium text-gray-700">Position (Romanian)</Label>
-                        <Input
-                          id="position_ro"
-                          name="position_ro"
-                          defaultValue={editingMember?.position_ro || ""}
-                          placeholder="Titlul postului în română"
-                          required
-                        />
-                      </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <Label htmlFor="bio_en">Bio (English)</Label>
-                        <Textarea
-                          id="bio_en"
-                          defaultValue={editingMember?.bio_en || ""}
-                          placeholder="Professional bio in English"
-                          rows={3}
-                        />
+                      {/* Member Bios */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="space-y-3">
+                          <Label htmlFor="bio_en" className="text-sm font-semibold text-gray-700">Bio (English)</Label>
+                          <Textarea
+                            id="bio_en"
+                            name="bio_en"
+                            defaultValue={editingMember?.bio_en || ""}
+                            placeholder="Professional bio in English"
+                            rows={3}
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300 resize-none"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="bio_ar" className="text-sm font-semibold text-gray-700">Bio (Arabic)</Label>
+                          <Textarea
+                            id="bio_ar"
+                            name="bio_ar"
+                            defaultValue={editingMember?.bio_ar || ""}
+                            placeholder="السيرة المهنية بالعربية"
+                            rows={3}
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300 resize-none text-right"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="bio_ro" className="text-sm font-semibold text-gray-700">Bio (Romanian)</Label>
+                          <Textarea
+                            id="bio_ro"
+                            name="bio_ro"
+                            defaultValue={editingMember?.bio_ro || ""}
+                            placeholder="Biografia profesională în română"
+                            rows={3}
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300 resize-none"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="bio_ar">Bio (Arabic)</Label>
-                        <Textarea
-                          id="bio_ar"
-                          defaultValue={editingMember?.bio_ar || ""}
-                          placeholder="السيرة المهنية بالعربية"
-                          rows={3}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="bio_ro">Bio (Romanian)</Label>
-                        <Textarea
-                          id="bio_ro"
-                          defaultValue={editingMember?.bio_ro || ""}
-                          placeholder="Biografia profesională în română"
-                          rows={3}
-                        />
-                      </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                          id="email"
-                          type="email"
-                          defaultValue={editingMember?.email || ""}
-                          placeholder="email@company.com"
-                        />
+                      {/* Contact Information */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <Label htmlFor="email" className="text-sm font-semibold text-gray-700">Email</Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            defaultValue={editingMember?.email || ""}
+                            placeholder="email@company.com"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="phone" className="text-sm font-semibold text-gray-700">Phone</Label>
+                          <Input
+                            id="phone"
+                            name="phone"
+                            defaultValue={editingMember?.phone || ""}
+                            placeholder="+40 123 456 789"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="phone">Phone</Label>
-                        <Input
-                          id="phone"
-                          defaultValue={editingMember?.phone || ""}
-                          placeholder="+40 123 456 789"
-                        />
-                      </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="experience_years">Experience (Years)</Label>
-                        <Input
-                          id="experience_years"
-                          type="number"
-                          defaultValue={editingMember?.experience_years || ""}
-                          placeholder="5"
-                        />
+                      {/* Experience & Image */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-3">
+                          <Label htmlFor="experience_years" className="text-sm font-semibold text-gray-700">Experience (Years)</Label>
+                          <Input
+                            id="experience_years"
+                            name="experience_years"
+                            type="number"
+                            defaultValue={editingMember?.experience_years || ""}
+                            placeholder="5"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <Label htmlFor="linkedin_url" className="text-sm font-semibold text-gray-700">LinkedIn URL</Label>
+                          <Input
+                            id="linkedin_url"
+                            name="linkedin_url"
+                            defaultValue={editingMember?.linkedin_url || ""}
+                            placeholder="https://linkedin.com/in/username"
+                            className="border-2 border-gray-300 rounded-xl focus:border-blue-500 transition-colors duration-300"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <ImageUpload
-                          value={editingMember?.image_url || ""}
-                          onChange={(url) => {
-                            // Update the hidden input when image changes
-                            const hiddenInput = document.querySelector('input[name="image_url"]') as HTMLInputElement
-                            if (hiddenInput) {
-                              hiddenInput.value = url
-                            }
+
+                      {/* Member Image */}
+                      <div className="space-y-4">
+                        <Label className="text-sm font-semibold text-gray-700">Profile Image</Label>
+                        <input type="hidden" name="image_url" value={editingMember?.image_url || ""} />
+                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 bg-gray-50/50">
+                          <ImageUpload
+                            value={editingMember?.image_url || ""}
+                            onChange={(url) => {
+                              const hiddenInput = document.querySelector('input[name="image_url"]') as HTMLInputElement;
+                              if (hiddenInput) {
+                                hiddenInput.value = url;
+                              }
+                            }}
+                            className="!mt-0"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Form Actions */}
+                      <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="px-8 py-3 rounded-xl border-2 border-gray-300 hover:border-gray-400"
+                          onClick={() => {
+                            setShowAddForm(false)
+                            setEditingMember(null)
                           }}
-                          placeholder="/team/member-name.jpg"
-                        />
-                        {/* Hidden input to store the image URL for form submission */}
-                        <input
-                          type="hidden"
-                          name="image_url"
-                          defaultValue={editingMember?.image_url || ""}
-                        />
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold transition-all duration-300 hover:scale-105"
+                        >
+                          {editingMember ? "Update Member" : "Add Member"}
+                        </Button>
                       </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="linkedin_url">LinkedIn URL</Label>
-                      <Input
-                        id="linkedin_url"
-                        defaultValue={editingMember?.linkedin_url || ""}
-                        placeholder="https://linkedin.com/in/username"
-                      />
-                    </div>
-
-                    <div className="flex justify-end space-x-4 pt-4 border-t">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        className="px-6 py-2"
-                        onClick={() => {
-                          setShowAddForm(false)
-                          setEditingMember(null)
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        {editingMember ? "Update Team Member" : "Add Team Member"}
-                      </Button>
-                    </div>
-                  </form>
-                </CardContent>
+                    </form>
+                  </CardContent>
                 </Card>
               </div>
             </div>
