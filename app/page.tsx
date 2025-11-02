@@ -12,6 +12,7 @@ import { useLanguage } from "@/contexts/language-context"
 import React from 'react'
 import { getServices } from './services'
 import Link from "next/link";
+import { useRouter } from "next/navigation"
 
 interface Service {
   icon: React.ComponentType<{ className?: string }>;
@@ -26,6 +27,7 @@ export default function HomePage() {
   const [services, setServices] = React.useState<Service[]>([])
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState<string | null>(null)
+  const router = useRouter()
 
   React.useEffect(() => {
     setLoading(true)
@@ -144,28 +146,33 @@ export default function HomePage() {
           </AnimatedSection>
           
           {/* Buttons */}
-          <AnimatedSection animation="fade-up" delay={1200} duration={1000}>
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Button
-                size="lg"
-                className="text-base px-6 py-2.5 bg-white text-black hover:bg-gray-100 hover:scale-105 transition-all duration-300 hover:shadow-xl font-semibold border-0 group"
-                aria-label={`${t("common.requestService")} - Get started with our logistics services`}
-              >
-                {t("common.requestService")}
-                <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
-                  {isRTL ? "←" : "→"}
-                </span>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-6 py-2.5 bg-transparent hover:bg-white/10 hover:scale-105 transition-all duration-300 border-2 border-white text-white backdrop-blur-sm"
-                aria-label={`${t("common.learnMore")} - Discover more about our services`}
-              >
-                {t("common.learnMore")}
-              </Button>
-            </div>
-          </AnimatedSection>
+         <AnimatedSection animation="fade-up" delay={1200} duration={1000}>
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        {/* زر الخدمات */}
+        <Button
+          size="lg"
+          className="text-base px-6 py-2.5 bg-white text-black hover:bg-gray-100 hover:scale-105 transition-all duration-300 hover:shadow-xl font-semibold border-0 group"
+          aria-label={`${t("common.requestService")} - Get started with our logistics services`}
+          onClick={() => router.push("/services")}
+        >
+          {t("common.requestService")}
+          <span className="ml-2 transform group-hover:translate-x-1 transition-transform">
+            {isRTL ? "←" : "→"}
+          </span>
+        </Button>
+
+        {/* زر المزيد → About */}
+        <Button
+          size="lg"
+          variant="outline"
+          className="text-base px-6 py-2.5 bg-transparent hover:bg-white/10 hover:scale-105 transition-all duration-300 border-2 border-white text-white backdrop-blur-sm"
+          aria-label={`${t("common.learnMore")} - Discover more about our services`}
+          onClick={() => router.push("/about")}
+        >
+          {t("common.learnMore")}
+        </Button>
+      </div>
+    </AnimatedSection>
         </div>
       </AnimatedSection>
       
